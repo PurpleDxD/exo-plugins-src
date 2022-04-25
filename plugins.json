@@ -1,0 +1,34 @@
+[
+  {
+    "id": "xoUtils",
+    "provider": "Exo",
+    "name": "xoUtils",
+    "releases": [
+      {
+        "date": "2022-04-25",
+        "version": "1.0.0",
+        "url": "https://github.com/purpledxd/exo-plugins/blob/main/release/xoUtils-1.0.0.jar?raw=true",
+        "sha512sum": "",
+        "requires": "^1.0.0"
+      }
+    ],
+    "projectUrl": "",
+    "description": "Exo - Utils required by plugin"
+  },
+  {
+    "id": "xoTestPlugin",
+    "provider": "Exo",
+    "name": "xoTestPlugin",
+    "releases": [
+      {
+        "date": "2022-04-25",
+        "version": "1.0.0",
+        "url": "https://github.com/purpledxd/exo-plugins/blob/main/release/xoTestPlugin-1.0.0.jar?raw=true",
+        "sha512sum": "",
+        "requires": "^1.0.0"
+      }
+    ],
+    "projectUrl": "",
+    "description": "Exo - Test Plugin"
+  }
+]
