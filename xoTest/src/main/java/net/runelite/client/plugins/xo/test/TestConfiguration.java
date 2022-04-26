@@ -41,7 +41,8 @@ public interface TestConfiguration extends Config {
     @ConfigItem(
             keyName = BOOL_CAPTURE_EVENTS_NAME,
             name = "Event Capture",
-            description = "Toggles the capture of events (mouse, keyboard)"
+            description = "Toggles the capture of events (mouse, keyboard)",
+            position = 0
     )
     default boolean shouldCaptureEvents() {
         return false;
@@ -50,7 +51,8 @@ public interface TestConfiguration extends Config {
     @ConfigItem(
             keyName = BUTTON_PRINT_EQUIP_NAME,
             name = "Print Equipment",
-            description = "Prints your equipped item names to the chat box"
+            description = "Prints your equipped item names to the chat box",
+            position = 1
     )
     default Button printEquipment() {
         return new Button();
@@ -59,7 +61,8 @@ public interface TestConfiguration extends Config {
     @ConfigItem(
             keyName = BUTTON_PRINT_INVENTORY_NAME,
             name = "Print Inventory",
-            description = "Prints your inventory item names to the chat box"
+            description = "Prints your inventory item names to the chat box",
+            position = 1
     )
     default Button printInventory() {
         return new Button();
@@ -68,7 +71,8 @@ public interface TestConfiguration extends Config {
     @ConfigItem(
             keyName = BUTTON_CONSUME_INVENTORY_ITEM,
             name = "Consume Inventory Item",
-            description = "Consumes an item in your inventory (drink or eat)"
+            description = "Consumes an item in your inventory (drink or eat)",
+            position = 2
     )
     default Button consumeInventoryItem() {
         return new Button();

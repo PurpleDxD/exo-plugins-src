@@ -1,4 +1,4 @@
-package net.runelite.client.plugins.xo.utils.impl;
+package net.runelite.client.plugins.xo.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.InventoryID;
@@ -6,7 +6,6 @@ import net.runelite.api.Point;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.api.widgets.WidgetItem;
-import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.xo.utils.models.InventoryItem;
 
 import javax.inject.Inject;
@@ -15,6 +14,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Singleton
@@ -22,9 +22,6 @@ public class InventoryUtils {
 
     @Inject
     private ClientUtils clientUtils;
-
-    @Inject
-    private ItemManager itemManager;
 
     public boolean isBankOpen() {
         return clientUtils.getClient().getItemContainer(InventoryID.BANK) != null;
@@ -57,6 +54,10 @@ public class InventoryUtils {
         }
 
         return widgetItems;
+    }
+
+    public List<InventoryItem> getConsumableItems() {
+        return getAllItems().stream().filter(i -> i.hasActions("Drink", "Eat")).collect(Collectors.toList());
     }
 
     private WidgetItem createWidgetItem(Widget item) {

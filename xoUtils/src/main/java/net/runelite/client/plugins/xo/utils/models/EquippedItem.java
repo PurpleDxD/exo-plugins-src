@@ -8,8 +8,8 @@ import net.runelite.http.api.item.ItemStats;
 @Value
 public class EquippedItem {
 
-    private ItemComposition composition;
-    private ItemStats stats;
+    private final ItemComposition composition;
+    private final ItemStats stats;
 
     public int getId() {
         return composition.getId();

@@ -1,4 +1,4 @@
-package net.runelite.client.plugins.xo.utils.impl;
+package net.runelite.client.plugins.xo.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.InventoryID;

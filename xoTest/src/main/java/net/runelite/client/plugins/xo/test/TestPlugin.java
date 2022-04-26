@@ -38,10 +38,7 @@ import net.runelite.client.input.MouseManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
-import net.runelite.client.plugins.xo.utils.Utils;
-import net.runelite.client.plugins.xo.utils.impl.ChatUtils;
-import net.runelite.client.plugins.xo.utils.impl.EquipmentUtils;
-import net.runelite.client.plugins.xo.utils.impl.InventoryUtils;
+import net.runelite.client.plugins.xo.utils.*;
 import net.runelite.client.plugins.xo.utils.models.EquippedItem;
 import net.runelite.client.plugins.xo.utils.models.InventoryItem;
 import org.pf4j.Extension;
@@ -53,7 +50,7 @@ import java.util.List;
 
 
 @Extension
-@PluginDependency(Utils.class)
+@PluginDependency(UtilsPlugin.class)
 @PluginDescriptor(
         name = "xoTest",
         enabledByDefault = false,
@@ -67,6 +64,12 @@ public class TestPlugin extends Plugin implements MouseListener, KeyListener {
     private TestConfiguration config;
 
     @Inject
+    private MouseManager mouseManager;
+
+    @Inject
+    private KeyManager keyManager;
+
+    @Inject
     private ChatUtils chatUtils;
 
     @Inject
@@ -76,13 +79,7 @@ public class TestPlugin extends Plugin implements MouseListener, KeyListener {
     private InventoryUtils inventoryUtils;
 
     @Inject
-    private ConfigManager configManager;
-
-    @Inject
-    private MouseManager mouseManager;
-
-    @Inject
-    private KeyManager keyManager;
+    private AutomationUtils automationUtils;
 
     @Provides
     TestConfiguration provideConfig(ConfigManager configManager) {
@@ -119,7 +116,7 @@ public class TestPlugin extends Plugin implements MouseListener, KeyListener {
                 break;
         }
     }
- 
+
     @Subscribe
     private void onConfigChanged(ConfigChanged event) {
         if (!event.getGroup().equalsIgnoreCase("xoTest")) {
@@ -172,7 +169,14 @@ public class TestPlugin extends Plugin implements MouseListener, KeyListener {
     }
 
     private void consumeInventoryItem() {
+        List<InventoryItem> inventoryItems = inventoryUtils.getConsumableItems();
 
+        if (inventoryItems.isEmpty()) {
+            chatUtils.sendGameMessage("No consumable inventory items found");
+            return;
+        }
+
+        automationUtils.click(inventoryItems.stream().findFirst().get().getBounds());
     }
 
     @Override
