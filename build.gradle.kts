@@ -54,7 +54,7 @@ subprojects {
 
     apply<JavaPlugin>()
 
-    val oprsVersion = "4.25.0"
+    val oprsVersion = "4.25.1"
 
     dependencies {
         annotationProcessor(Libraries.lombok)
