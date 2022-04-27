@@ -39,6 +39,8 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.plugins.xo.utils.*;
+import net.runelite.client.plugins.xo.utils.constants.ActionNames;
+import net.runelite.client.plugins.xo.utils.models.Action;
 import net.runelite.client.plugins.xo.utils.models.EquippedItem;
 import net.runelite.client.plugins.xo.utils.models.InventoryItem;
 import org.pf4j.Extension;
@@ -111,8 +113,14 @@ public class TestPlugin extends Plugin implements MouseListener, KeyListener {
             case TestConfiguration.BUTTON_PRINT_INVENTORY_NAME:
                 printInventory();
                 break;
+            case TestConfiguration.BUTTON_PRINT_INVENTORY_OPCODE:
+                printInventoryOpCode();
+                break;
             case TestConfiguration.BUTTON_CONSUME_INVENTORY_ITEM:
                 consumeInventoryItem();
+                break;
+            case TestConfiguration.BUTTON_EQUIP_INVENTORY_ITEM:
+                equipInventoryItem();
                 break;
         }
     }
@@ -164,7 +172,25 @@ public class TestPlugin extends Plugin implements MouseListener, KeyListener {
         }
 
         for (InventoryItem item : inventoryItems) {
-            chatUtils.sendGameMessage(String.format("[%d] %s x%d", item.getIndex(), item.getName(), item.getQuantity()));
+            chatUtils.sendGameMessage(String.format("[%d] %s x%d",
+                                                    item.getIndex(),
+                                                    item.getName(),
+                                                    item.getQuantity()
+            ));
+        }
+    }
+
+    private void printInventoryOpCode() {
+        List<InventoryItem> inventoryItems = inventoryUtils.getAllItems();
+
+        if (inventoryItems.isEmpty()) {
+            chatUtils.sendGameMessage("No inventory items found");
+            return;
+        }
+
+        InventoryItem inventoryItem = inventoryItems.stream().findFirst().get();
+        for (Action action : inventoryItem.getActions()) {
+            chatUtils.sendGameMessage(String.format("[%d] %s", action.getOpCode(), action.getName()));
         }
     }
 
@@ -172,11 +198,22 @@ public class TestPlugin extends Plugin implements MouseListener, KeyListener {
         List<InventoryItem> inventoryItems = inventoryUtils.getConsumableItems();
 
         if (inventoryItems.isEmpty()) {
-            chatUtils.sendGameMessage("No consumable inventory items found");
+            chatUtils.sendGameMessage("No consumable items found in inventory");
             return;
         }
 
-        automationUtils.click(inventoryItems.stream().findFirst().get().getBounds());
+        automationUtils.Interact(inventoryItems.stream().findFirst().get(), ActionNames.CONSUMBABLE);
+    }
+
+    private void equipInventoryItem() {
+        List<InventoryItem> inventoryItems = inventoryUtils.getEquipableItems();
+
+        if (inventoryItems.isEmpty()) {
+            chatUtils.sendGameMessage("No equipable items found in inventory");
+            return;
+        }
+
+        automationUtils.Interact(inventoryItems.stream().findFirst().get(), ActionNames.EQUIPABLE);
     }
 
     @Override

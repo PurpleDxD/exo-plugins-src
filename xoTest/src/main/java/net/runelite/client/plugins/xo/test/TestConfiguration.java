@@ -36,7 +36,9 @@ public interface TestConfiguration extends Config {
     String BOOL_CAPTURE_EVENTS_NAME = "shouldCaptureEvents";
     String BUTTON_PRINT_EQUIP_NAME = "btnPrintEquip";
     String BUTTON_PRINT_INVENTORY_NAME = "btnPrintInventory";
+    String BUTTON_PRINT_INVENTORY_OPCODE = "btnPrintInventoryOpCode";
     String BUTTON_CONSUME_INVENTORY_ITEM = "btnConsumeInventoryItem";
+    String BUTTON_EQUIP_INVENTORY_ITEM = "btnEquipInventoryItem";
 
     @ConfigItem(
             keyName = BOOL_CAPTURE_EVENTS_NAME,
@@ -69,12 +71,32 @@ public interface TestConfiguration extends Config {
     }
 
     @ConfigItem(
+            keyName = BUTTON_PRINT_INVENTORY_OPCODE,
+            name = "Print OpCodes",
+            description = "Prints the first item in your inventory's OpCodes to the chat box",
+            position = 1
+    )
+    default Button printInventoryOpCode() {
+        return new Button();
+    }
+
+    @ConfigItem(
             keyName = BUTTON_CONSUME_INVENTORY_ITEM,
             name = "Consume Inventory Item",
-            description = "Consumes an item in your inventory (drink or eat)",
+            description = "Consumes the first item in your inventory (drink or eat)",
             position = 2
     )
     default Button consumeInventoryItem() {
+        return new Button();
+    }
+
+    @ConfigItem(
+            keyName = BUTTON_EQUIP_INVENTORY_ITEM,
+            name = "Equip Inventory Item",
+            description = "Equips the first item in your inventory",
+            position = 2
+    )
+    default Button equipInventoryItem() {
         return new Button();
     }
 }

@@ -37,7 +37,9 @@ public class EquipmentUtils {
                     continue;
                 }
 
-                equipped.add(new EquippedItem(itemManager.getItemComposition(item.getId()), itemManager.getItemStats(item.getId(), false)));
+                equipped.add(new EquippedItem(itemManager.getItemComposition(item.getId()),
+                                              itemManager.getItemStats(item.getId(), false)
+                ));
             }
 
         }

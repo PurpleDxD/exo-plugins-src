@@ -6,6 +6,7 @@ import net.runelite.api.Point;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.api.widgets.WidgetItem;
+import net.runelite.client.plugins.xo.utils.constants.ActionNames;
 import net.runelite.client.plugins.xo.utils.models.InventoryItem;
 
 import javax.inject.Inject;
@@ -57,7 +58,11 @@ public class InventoryUtils {
     }
 
     public List<InventoryItem> getConsumableItems() {
-        return getAllItems().stream().filter(i -> i.hasActions("Drink", "Eat")).collect(Collectors.toList());
+        return getAllItems().stream().filter(i -> i.hasAction(ActionNames.CONSUMBABLE)).collect(Collectors.toList());
+    }
+
+    public List<InventoryItem> getEquipableItems() {
+        return getAllItems().stream().filter(i -> i.hasAction(ActionNames.EQUIPABLE)).collect(Collectors.toList());
     }
 
     private WidgetItem createWidgetItem(Widget item) {

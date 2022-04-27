@@ -21,9 +21,9 @@ public class ChatUtils {
         String chatMessage = new ChatMessageBuilder().append(ChatColorType.HIGHLIGHT).append(message).build();
 
         chatMessageManager.queue(QueuedMessage.builder()
-                .type(ChatMessageType.CONSOLE)
-                .runeLiteFormattedMessage(chatMessage)
-                .build());
+                                              .type(ChatMessageType.CONSOLE)
+                                              .runeLiteFormattedMessage(chatMessage)
+                                              .build());
     }
 
 }

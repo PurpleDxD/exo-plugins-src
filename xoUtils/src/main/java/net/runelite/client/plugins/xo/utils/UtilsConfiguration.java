@@ -1,6 +1,7 @@
 package net.runelite.client.plugins.xo.utils;
 
 import net.runelite.client.config.*;
+import net.runelite.client.plugins.xo.utils.constants.InteractionType;
 
 @ConfigGroup("xoUtils")
 public interface UtilsConfiguration extends Config {
@@ -8,16 +9,26 @@ public interface UtilsConfiguration extends Config {
     @ConfigTitle(
             name = "Delays",
             description = "",
-            position = 0
+            position = 50
     )
     String delays = "Delays";
+
+    @ConfigItem(
+            keyName = "interfactionType",
+            name = "Interfaction Type",
+            description = "How the plugin will interfact with game objects",
+            position = 0
+    )
+    default InteractionType interactionType() {
+        return InteractionType.SHADOW;
+    }
 
     @Units(Units.MILLISECONDS)
     @ConfigItem(
             keyName = "miniDelay",
             name = "Minimum delay",
             description = "Absolute minimum delay between actions",
-            position = 1,
+            position = 51,
             title = delays
     )
     default int minimumDelay() {
@@ -29,7 +40,7 @@ public interface UtilsConfiguration extends Config {
             keyName = "maxiDelay",
             name = "Maximum delay",
             description = "Absolute maximum delay between actions",
-            position = 1,
+            position = 51,
             title = delays
     )
     default int maximumDelay() {
@@ -41,7 +52,7 @@ public interface UtilsConfiguration extends Config {
             keyName = "target",
             name = "Delay Target",
             description = "",
-            position = 1,
+            position = 51,
             title = delays
     )
     default int target() {
@@ -53,7 +64,7 @@ public interface UtilsConfiguration extends Config {
             keyName = "deviation",
             name = "Delay Deviation",
             description = "",
-            position = 1,
+            position = 51,
             title = delays
     )
     default int deviation() {
@@ -64,7 +75,7 @@ public interface UtilsConfiguration extends Config {
             keyName = "weightedDistribution",
             name = "Weighted Distribution",
             description = "Shifts the random distribution towards the lower end at the target, otherwise it will be an even distribution",
-            position = 1,
+            position = 51,
             title = delays
     )
     default boolean weightedDistribution() {

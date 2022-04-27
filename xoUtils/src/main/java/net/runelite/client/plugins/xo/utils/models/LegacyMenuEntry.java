@@ -1,20 +1,16 @@
 package net.runelite.client.plugins.xo.utils.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Value;
 
-@Getter
-@Setter
-@AllArgsConstructor
+@Value
 public class LegacyMenuEntry {
 
-    String option;
-    String target;
-    int identifier;
-    int menuAction;
-    int param0;
-    int param1;
-    boolean forceLeftClick;
+    private final String option;
+    private final String target;
+    private final int identifier;
+    private final int menuAction;
+    private final int param0;
+    private final int param1;
+    private final boolean forceLeftClick;
 
 }
