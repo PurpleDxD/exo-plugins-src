@@ -2,57 +2,38 @@ package net.runelite.client.plugins.xo.utils.models;
 
 import com.google.common.base.Strings;
 import lombok.Value;
-import net.runelite.api.widgets.WidgetItem;
+import net.runelite.api.NPC;
 
-import java.awt.*;
 import java.util.List;
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Value
-public class InventoryItem {
+public class GameNPC {
 
-    private static final Pattern pattern = Pattern.compile("(?<=<col=[a-zA-Z\\d]{6}>)(.*?)(?=<\\/col>)");
+    private final NPC npc;
 
-    private final WidgetItem widgetItem;
+    // TODO: Abstract out actions (duplicate in InventoryItem)
     private final List<GameAction> actions;
-    private final String name;
 
-    public InventoryItem(WidgetItem widgetItem) {
-        this.widgetItem = widgetItem;
+    public GameNPC(NPC npc) {
+        this.npc = npc;
 
-        String[] widgetActions = widgetItem.getWidget().getActions();
+        String[] widgetActions = npc.getComposition().getActions();
         actions = IntStream.range(0, widgetActions.length)
                            .boxed()
                            .filter(i -> !Strings.isNullOrEmpty(widgetActions[i]))
                            .map(i -> new GameAction(widgetActions[i], i + 1))
                            .collect(Collectors.toList());
-
-        Matcher match = pattern.matcher(getFullName());
-        name = match.find() ? match.group() : "";
     }
 
-    public int getId() {
-        return widgetItem.getId();
+    public String getName() {
+        return npc.getName();
     }
 
-    public String getFullName() {
-        return widgetItem.getWidget().getName();
-    }
-
-    public int getQuantity() {
-        return widgetItem.getQuantity();
-    }
-
-    public int getIndex() {
-        return widgetItem.getIndex();
-    }
-
-    public Rectangle getBounds() {
-        return widgetItem.getWidget().getBounds();
+    public Integer getId() {
+        return npc.getId();
     }
 
     public boolean hasAction(List<String> actionNames) {
@@ -63,5 +44,4 @@ public class InventoryItem {
     public Optional<GameAction> getAction(List<String> actionNames) {
         return actions.stream().filter(a -> actionNames.contains(a.getName())).findFirst();
     }
-
 }

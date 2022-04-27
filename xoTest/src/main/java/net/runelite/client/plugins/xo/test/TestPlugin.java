@@ -40,8 +40,9 @@ import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.plugins.xo.utils.*;
 import net.runelite.client.plugins.xo.utils.constants.ActionNames;
-import net.runelite.client.plugins.xo.utils.models.Action;
 import net.runelite.client.plugins.xo.utils.models.EquippedItem;
+import net.runelite.client.plugins.xo.utils.models.GameAction;
+import net.runelite.client.plugins.xo.utils.models.GameNPC;
 import net.runelite.client.plugins.xo.utils.models.InventoryItem;
 import org.pf4j.Extension;
 
@@ -83,6 +84,9 @@ public class TestPlugin extends Plugin implements MouseListener, KeyListener {
     @Inject
     private AutomationUtils automationUtils;
 
+    @Inject
+    private NPCUtils npcUtils;
+
     @Provides
     TestConfiguration provideConfig(ConfigManager configManager) {
         return configManager.getConfig(TestConfiguration.class);
@@ -115,6 +119,12 @@ public class TestPlugin extends Plugin implements MouseListener, KeyListener {
                 break;
             case TestConfiguration.BUTTON_PRINT_INVENTORY_OPCODE:
                 printInventoryOpCode();
+                break;
+            case TestConfiguration.BUTTON_PRINT_NEAREST_NPC:
+                printNearestNPC();
+                break;
+            case TestConfiguration.BUTTON_PRINT_NPC_OPCODE:
+                printNPCOpCode();
                 break;
             case TestConfiguration.BUTTON_CONSUME_INVENTORY_ITEM:
                 consumeInventoryItem();
@@ -189,7 +199,32 @@ public class TestPlugin extends Plugin implements MouseListener, KeyListener {
         }
 
         InventoryItem inventoryItem = inventoryItems.stream().findFirst().get();
-        for (Action action : inventoryItem.getActions()) {
+        for (GameAction action : inventoryItem.getActions()) {
+            chatUtils.sendGameMessage(String.format("[%d] %s", action.getOpCode(), action.getName()));
+        }
+    }
+
+    private void printNearestNPC() {
+        GameNPC npc = npcUtils.getNearest();
+
+        if (npc == null) {
+            chatUtils.sendGameMessage("No NPC found");
+            return;
+        }
+
+        chatUtils.sendGameMessage(String.format("[%d] %s", npc.getId(), npc.getName()));
+    }
+
+
+    private void printNPCOpCode() {
+        GameNPC npc = npcUtils.getNearest();
+
+        if (npc == null) {
+            chatUtils.sendGameMessage("No NPC found");
+            return;
+        }
+
+        for (GameAction action : npc.getActions()) {
             chatUtils.sendGameMessage(String.format("[%d] %s", action.getOpCode(), action.getName()));
         }
     }

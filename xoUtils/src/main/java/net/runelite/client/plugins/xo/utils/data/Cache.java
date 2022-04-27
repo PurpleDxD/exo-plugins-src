@@ -1,4 +1,4 @@
-package net.runelite.client.plugins.xo.utils;
+package net.runelite.client.plugins.xo.utils.data;
 
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.client.plugins.Plugin;
@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Slf4j
 @Singleton
-public class Container {
+public class Cache {
 
     private final Map<Class<? extends Plugin>, Map<Class<?>, Object>> container = new HashMap<>();
 

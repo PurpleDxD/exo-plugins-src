@@ -5,7 +5,8 @@ import net.runelite.api.GameState;
 import net.runelite.api.MenuAction;
 import net.runelite.api.Point;
 import net.runelite.api.widgets.WidgetInfo;
-import net.runelite.client.plugins.xo.utils.models.Action;
+import net.runelite.client.plugins.xo.utils.data.Cache;
+import net.runelite.client.plugins.xo.utils.models.GameAction;
 import net.runelite.client.plugins.xo.utils.models.InventoryItem;
 import net.runelite.client.plugins.xo.utils.models.LegacyMenuEntry;
 
@@ -35,10 +36,10 @@ public class AutomationUtils {
     private ClientUtils clientUtils;
 
     @Inject
-    private Container container;
+    private Cache cache;
 
     public void Interact(InventoryItem item, List<String> actionNames) {
-        Optional<Action> oAction = item.getAction(actionNames);
+        Optional<GameAction> oAction = item.getAction(actionNames);
         if (!oAction.isPresent()) {
             return;
         }
@@ -61,7 +62,7 @@ public class AutomationUtils {
                         break;
                 }
 
-                container.put(UtilsPlugin.class, LegacyMenuEntry.class, menuEntry);
+                cache.put(UtilsPlugin.class, LegacyMenuEntry.class, menuEntry);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -69,7 +70,7 @@ public class AutomationUtils {
     }
 
     private void Invoke(LegacyMenuEntry menuEntry) {
-        // TODO
+        // TODO:
     }
 
     private void Click(Rectangle bounds) {
@@ -89,7 +90,7 @@ public class AutomationUtils {
         mouseEvent(MouseEvent.MOUSE_CLICKED, clickPoint, false);
     }
 
-    private LegacyMenuEntry getLegacyMenuEntry(InventoryItem item, Action action) {
+    private LegacyMenuEntry getLegacyMenuEntry(InventoryItem item, GameAction action) {
         int opCode = action.getOpCode();
         MenuAction menuAction = opCode < 6 ? MenuAction.CC_OP : MenuAction.CC_OP_LOW_PRIORITY;
 

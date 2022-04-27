@@ -6,13 +6,6 @@ import net.runelite.client.plugins.xo.utils.constants.InteractionType;
 @ConfigGroup("xoUtils")
 public interface UtilsConfiguration extends Config {
 
-    @ConfigTitle(
-            name = "Delays",
-            description = "",
-            position = 50
-    )
-    String delays = "Delays";
-
     @ConfigItem(
             keyName = "interfactionType",
             name = "Interfaction Type",
@@ -22,6 +15,13 @@ public interface UtilsConfiguration extends Config {
     default InteractionType interactionType() {
         return InteractionType.SHADOW;
     }
+
+    @ConfigTitle(
+            name = "Delays",
+            description = "",
+            position = 50
+    )
+    String delays = "Delays";
 
     @Units(Units.MILLISECONDS)
     @ConfigItem(
